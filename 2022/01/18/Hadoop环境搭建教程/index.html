@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Hadoop环境搭建教程 | 神樂坂优纪</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="《Hadoop环境搭建教程》 搭建linux基本环境（VMware虚拟机）   这里使用的是VMware16，镜像使用CentOS-7-x86_64-Minimal-2009.iso 可以在中科大镜像站获得http:&#x2F;&#x2F;mirrors.ustc.edu.cn&#x2F;centos&#x2F;7&#x2F;isos&#x2F;x86_64&#x2F; 这里选择Minimal（最小化）是因为我们用不到图形界面，仔细一想服务器几乎都是没有显卡的，谁会">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop环境搭建教程">
+<meta property="og:url" content="http://example.com/2022/01/18/Hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:site_name" content="神樂坂优纪">
+<meta property="og:description" content="《Hadoop环境搭建教程》 搭建linux基本环境（VMware虚拟机）   这里使用的是VMware16，镜像使用CentOS-7-x86_64-Minimal-2009.iso 可以在中科大镜像站获得http:&#x2F;&#x2F;mirrors.ustc.edu.cn&#x2F;centos&#x2F;7&#x2F;isos&#x2F;x86_64&#x2F; 这里选择Minimal（最小化）是因为我们用不到图形界面，仔细一想服务器几乎都是没有显卡的，谁会">
+<meta property="og:locale">
+<meta property="og:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_b780be2c0269642b.png">
+<meta property="og:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_e021ecd7d48ee206.jpg">
+<meta property="og:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_e27fb245bb07b71f.png">
+<meta property="og:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_23df5a77000136d3.png">
+<meta property="og:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_fc8aacc90aca008f.jpg">
+<meta property="og:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_5c24f07ee15ece10.png">
+<meta property="og:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_46ea4aebf759550a.png">
+<meta property="og:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_7107a092e40aade8.png">
+<meta property="og:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_2a15307ea0b4c82b.png">
+<meta property="og:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_4ea11ff2c3c1c0a1.png">
+<meta property="og:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_c9b8d2e891025854.png">
+<meta property="og:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_6c0d0e15e9463f7.png">
+<meta property="og:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_b3906be4519cd3e2.png">
+<meta property="og:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_533d1db8f5d9454d.png">
+<meta property="og:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_6d909a2216b75497.png">
+<meta property="og:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_51c3dcfbe5abae49.png">
+<meta property="og:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_b7f0c1f9f25204c3.png">
+<meta property="og:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_a5a7c8748bc7fe03.png">
+<meta property="og:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_c62bd79be4797f21.png">
+<meta property="og:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_7de721dc47cad6d7.png">
+<meta property="og:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_644e094f3890a1ba.png">
+<meta property="og:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_feca98f5cb7fcb4c.png">
+<meta property="og:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_4d6bf617d5c28c77.png">
+<meta property="og:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_92511b3f4573c142.png">
+<meta property="og:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_54a617d5c6ab634b.png">
+<meta property="og:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_8702655b2ab5fe8.png">
+<meta property="og:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_aa2e1837f4158cff.png">
+<meta property="og:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_8f917e400a824eb1.png">
+<meta property="og:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_6c2932dc40edcd40.png">
+<meta property="og:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_643924a961bc28b5.png">
+<meta property="og:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_6d77eadb8923c6b2.png">
+<meta property="og:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_7a2ecb71f66dc1d0.png">
+<meta property="og:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_95a3705563b495a.png">
+<meta property="og:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_babee5f06a457718.png">
+<meta property="og:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_ef79e93fe38f4360.png">
+<meta property="og:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_64f3fb529e49180d.png">
+<meta property="og:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_d31bc41415bd0f64.png">
+<meta property="og:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_38167f32f00beca3.png">
+<meta property="article:published_time" content="2022-01-18T12:12:17.000Z">
+<meta property="article:modified_time" content="2022-01-18T13:15:57.354Z">
+<meta property="article:author" content="神樂坂优纪">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_b780be2c0269642b.png">
+  
+    <link rel="alternate" href="/atom.xml" title="神樂坂优纪" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">神樂坂优纪</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Suche"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Hadoop环境搭建教程" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/01/18/Hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/" class="article-date">
+  <time class="dt-published" datetime="2022-01-18T12:12:17.000Z" itemprop="datePublished">2022-01-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Hadoop环境搭建教程
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="《Hadoop环境搭建教程》"><a href="#《Hadoop环境搭建教程》" class="headerlink" title="《Hadoop环境搭建教程》"></a>《Hadoop环境搭建教程》</h1><ol>
+<li><h2 id="搭建linux基本环境（VMware虚拟机）"><a href="#搭建linux基本环境（VMware虚拟机）" class="headerlink" title="搭建linux基本环境（VMware虚拟机）"></a>搭建linux基本环境（VMware虚拟机）</h2></li>
+</ol>
+<p><img src="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_b780be2c0269642b.png" alt="img"></p>
+<p>这里使用的是VMware16，镜像使用CentOS-7-x86_64-Minimal-2009.iso</p>
+<p>可以在中科大镜像站获得<a target="_blank" rel="noopener" href="http://mirrors.ustc.edu.cn/centos/7/isos/x86_64/">http://mirrors.ustc.edu.cn/centos/7/isos/x86_64/</a></p>
+<p>这里选择Minimal（最小化）是因为我们用不到图形界面，仔细一想服务器几乎都是没有显卡的，谁会装图形界面呢？</p>
+<p><img src="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_e021ecd7d48ee206.jpg" alt="img"></p>
+<p>首先我们点击创建虚拟机</p>
+<p><img src="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_e27fb245bb07b71f.png" alt="img"></p>
+<p><img src="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_23df5a77000136d3.png" alt="img"></p>
+<p>你已经是个成熟的开发人员了，要学会自己定义安装的东西了。</p>
+<p><img src="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_fc8aacc90aca008f.jpg" alt="img"></p>
+<p><img src="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_5c24f07ee15ece10.png" alt="img"></p>
+<p>这里直接下一步</p>
+<p><img src="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_46ea4aebf759550a.png" alt="img"></p>
+<p>这里点第二个，我们就可以用旁边的浏览按钮去找我们需要的linux镜像了。</p>
+<p><img src="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_7107a092e40aade8.png" alt="img"></p>
+<p>选好了就可以下一步了</p>
+<p><img src="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_2a15307ea0b4c82b.png" alt="img"></p>
+<p>名字和路径可以自己选择</p>
+<p><img src="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_4ea11ff2c3c1c0a1.png" alt="img"></p>
+<p>这里一般默认是1个处理器也就是1核，然后选择2个线程。</p>
+<p><img src="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_c9b8d2e891025854.png" alt="img"></p>
+<p><img src="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_6c0d0e15e9463f7.png" alt="img"></p>
+<p>内存的话推荐内存就好了，看你自己的内存实际大小酌情增加或减少</p>
+<p><img src="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_b3906be4519cd3e2.png" alt="img"></p>
+<p>这里我们默认选择NAT</p>
+<p><img src="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_533d1db8f5d9454d.png" alt="img"></p>
+<p>这里默认推荐的就好</p>
+<p><img src="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_6d909a2216b75497.png" alt="img"></p>
+<p>这里也用推荐的就OK</p>
+<p><img src="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_51c3dcfbe5abae49.png" alt="img"></p>
+<p>这里直接下一步</p>
+<p><img src="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_b7f0c1f9f25204c3.png" alt="img"></p>
+<p>这里20G就够了，然后最好选择存储为单个文件</p>
+<p><img src="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_a5a7c8748bc7fe03.png" alt="img"></p>
+<p>然后直接下一步就好了</p>
+<p>这时候虚拟机会自动打开，然后等待它进入选择语言的安装界面就好了，但是这里语言绝对要记得选英文，因为没有图形界面的linux系统是不会显示中文的，英文不好的同学就有点痛苦了吧，但是没有办法呀。</p>
+<p><img src="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_c62bd79be4797f21.png" alt="img"></p>
+<p>这里我们直接点右下角的continue 继续</p>
+<p><img src="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_7de721dc47cad6d7.png" alt="img"></p>
+<p>然后这里我们直接点这个安装目标磁盘</p>
+<p><img src="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_644e094f3890a1ba.png" alt="img"></p>
+<p>进去以后直接点左上角的done,它会默认分好给你</p>
+<p><img src="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_feca98f5cb7fcb4c.png" alt="img"></p>
+<p>最后点Begin Installation就可以让它自己安装了</p>
+<p><img src="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_4d6bf617d5c28c77.png" alt="img"></p>
+<p>但这里需要去设置root用户密码，旁边的那个创建用户可以不管，因为目前阶段来说没有什么太大用处。（真就化身root敢死队）</p>
+<p><img src="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_92511b3f4573c142.png" alt="img"></p>
+<p>这里我设置的是123，但是linux不建议使用太简单的密码，所以这里你会发现点一次Done没有退出去，所以你需要连点两次Done</p>
+<p><img src="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_54a617d5c6ab634b.png" alt="img"></p>
+<p>那么现在你就可以等待它安装完成然后点击reboot重启了。</p>
+<p>接下来因为我懒，所以直接copy之前写的联网手册了。</p>
+<h1 id="基于Centos7的Vmware虚拟机联网手册"><a href="#基于Centos7的Vmware虚拟机联网手册" class="headerlink" title="基于Centos7的Vmware虚拟机联网手册"></a>基于Centos7的Vmware虚拟机联网手册</h1><h2 id="首先你的主机网络一定要畅通，不然下面的操作毫无意义"><a href="#首先你的主机网络一定要畅通，不然下面的操作毫无意义" class="headerlink" title="首先你的主机网络一定要畅通，不然下面的操作毫无意义"></a>首先你的主机网络一定要畅通，不然下面的操作毫无意义</h2><h3 id="一-检查VMware的虚拟机网络设置"><a href="#一-检查VMware的虚拟机网络设置" class="headerlink" title="一.检查VMware的虚拟机网络设置"></a>一.检查VMware的虚拟机网络设置</h3><p>首先它必须是能够选择的，而不是灰色的，灰色意味着你的Vmware可能有问题，或者你的网络适配器没有启用</p>
+<p><img src="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_8702655b2ab5fe8.png" alt="img"></p>
+<p>然后点击这个NAT Settings</p>
+<p><img src="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_aa2e1837f4158cff.png" alt="img"></p>
+<h4 id="接下来是重点，你需要牢牢记住这个界面的这些信息，它们是你联网是否成功的关键！！"><a href="#接下来是重点，你需要牢牢记住这个界面的这些信息，它们是你联网是否成功的关键！！" class="headerlink" title="接下来是重点，你需要牢牢记住这个界面的这些信息，它们是你联网是否成功的关键！！"></a>接下来是重点，你需要牢牢记住这个界面的这些信息，它们是你联网是否成功的关键！！</h4><p><img src="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_8f917e400a824eb1.png" alt="img"></p>
+<h3 id="记住上面的IP，-子网掩码-，网关"><a href="#记住上面的IP，-子网掩码-，网关" class="headerlink" title="记住上面的IP， 子网掩码 ，网关"></a>记住上面的IP， 子网掩码 ，网关</h3><h3 id=""><a href="#" class="headerlink" title=""></a></h3><h3 id="二-打开centos7虚拟机，输入用户名和密码，注意，linux下密码是默认看不见的，所以敲对了回车就好，进入终端，关闭防火墙，打开ssh服务，输入以下命令，一条一条回车执行"><a href="#二-打开centos7虚拟机，输入用户名和密码，注意，linux下密码是默认看不见的，所以敲对了回车就好，进入终端，关闭防火墙，打开ssh服务，输入以下命令，一条一条回车执行" class="headerlink" title="二. 打开centos7虚拟机，输入用户名和密码，注意，linux下密码是默认看不见的，所以敲对了回车就好，进入终端，关闭防火墙，打开ssh服务，输入以下命令，一条一条回车执行"></a>二. 打开centos7虚拟机，输入用户名和密码，注意，linux下密码是默认看不见的，所以敲对了回车就好，进入终端，关闭防火墙，打开ssh服务，输入以下命令，一条一条回车执行</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld</span><br><span class="line">systemctl <span class="built_in">disable</span> firewalld</span><br><span class="line">systemctl start sshd</span><br><span class="line">systemctl <span class="built_in">enable</span> sshd</span><br></pre></td></tr></table></figure>
+
+<h3 id="三-编辑网卡配置文件"><a href="#三-编辑网卡配置文件" class="headerlink" title="三. 编辑网卡配置文件"></a>三. 编辑网卡配置文件</h3><h4 id="vi-etc-sysconfig-network-scripts-ifcfg-ens33"><a href="#vi-etc-sysconfig-network-scripts-ifcfg-ens33" class="headerlink" title="vi /etc/sysconfig/network-scripts/ifcfg-ens33"></a>vi /etc/sysconfig/network-scripts/ifcfg-ens33</h4><p><img src="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_6c2932dc40edcd40.png" alt="img"></p>
+<p>这个文件里，你需要更改的地方有几个</p>
+<ol>
+<li>​    BOOTPROTO=static</li>
+<li>​    IPADDR=172.16.254.80 这个IP是根据你的NAT Settings里的那个IP决定的，不要照抄，最后一位尽量设置后一点，比如 172.16.254. 111 或者172.16.254 . 123</li>
+<li>​    ONBOOT=yes</li>
+<li>​    NETMASK=255.255.255.0 这里照抄NAT Settings里的掩码即可</li>
+<li>​    GATEWAY=172.16.254.2 这里也要照抄NAT Settings里的GATEWAY</li>
+<li>​    DNS1=114.114.114.114 我选择电信的域名解析服务</li>
+</ol>
+<h5 id="以上配置完成以后，按-wq保存退出，重启虚拟机。"><a href="#以上配置完成以后，按-wq保存退出，重启虚拟机。" class="headerlink" title="以上配置完成以后，按 :wq保存退出，重启虚拟机。"></a>以上配置完成以后，按 :wq保存退出，重启虚拟机。</h5><h4 id="顺利的话，你现在可以用xshell登录了"><a href="#顺利的话，你现在可以用xshell登录了" class="headerlink" title="顺利的话，你现在可以用xshell登录了"></a>顺利的话，你现在可以用xshell登录了</h4><h2 id="二-Hadoop环境搭建"><a href="#二-Hadoop环境搭建" class="headerlink" title="二.Hadoop环境搭建"></a>二.Hadoop环境搭建</h2><h3 id="一-环境搭建"><a href="#一-环境搭建" class="headerlink" title="一.环境搭建"></a>一.环境搭建</h3><p>1.虚拟机：VMware （默认你已经有了，并且知道怎么使用）</p>
+<p>2.Hadoop-2.10.1的包（可以去官方下载，也可以选择各大高校的镜像站下载，例如：<a target="_blank" rel="noopener" href="http://mirrors.ustc.edu.cn/apache/hadoop/core/">http://mirrors.ustc.edu.cn/apache/hadoop/core/</a> 中国科学技术大学镜像站）</p>
+<p>3.JDK的包 （oracle官网下载或者其他任意方式下载都行，但注意扩展格式需为.tar.gz）</p>
+<p>4.将以上两个包通过任意门传送进虚拟机的linux系统内然后解压到你喜欢的目录下吧，最好是/usr/下，方便统一管理。</p>
+<p>5.网络配置默认你已经配置完成了，这里就不赘述了，因为我懒</p>
+<h3 id="二-环境配置"><a href="#二-环境配置" class="headerlink" title="二. 环境配置"></a>二. 环境配置</h3><p>在/etc/profile里添加环境变量（/etc目录的修改必然需要使用root权限）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> JAVA_HOME=/usr/share/java <span class="comment">#写你的jdk的目录</span></span><br><span class="line"><span class="built_in">export</span> HADOOP_HOME=/usr/hadoop <span class="comment">#写你的hadoop目录</span></span><br><span class="line"><span class="built_in">export</span> CLASSPATH=<span class="variable">$CLASSPATH</span>:<span class="variable">$JAVA_HOME</span>/lib:<span class="variable">$JAVA_HOME</span>/jre/lib</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$JAVA_HOME</span>/jre/bin:<span class="variable">$HADOOP_HOME</span>/bin:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure>
+
+<p>写完以后，保存退出，输入命令回车：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">source</span> /etc/profile</span><br></pre></td></tr></table></figure>
+
+<p>如果在这个时候发现一些基础的linux系统命令无法使用了，大概率是你的环境变量配置得有问题，先在终端输入：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PATH=/usr/bin:$PATH</span><br></pre></td></tr></table></figure>
+
+<p>以暂时能够使用一些基本命令，然后回到刚才修改的文件里看看是不是有哪里打错了</p>
+<p>使用以下命令检查hadoop是否能够正常运作：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hadoop version</span></span><br></pre></td></tr></table></figure>
+
+<p>如果输出 command not found 那就是还没有配置好，但是基本上不会出现这样的情况</p>
+<h3 id="三-Hadoop单机版搭建"><a href="#三-Hadoop单机版搭建" class="headerlink" title="三. Hadoop单机版搭建"></a>三. Hadoop单机版搭建</h3><p>单机版不需要搭建，直接启动就是了</p>
+<h3 id="四-Hadoop伪分布式搭建"><a href="#四-Hadoop伪分布式搭建" class="headerlink" title="四. Hadoop伪分布式搭建"></a>四. Hadoop伪分布式搭建</h3><p>1.伪分布式的意思就是一个主机它既充当NameNode,又充当DataNode.</p>
+<p>2.伪分布式只需要一台主机就能够完成.</p>
+<p>3.hadoop下比较重要的两个目录分别是/sbin和/etc/hadoop，/sbin目录下有启动hadoop不同服务的各种脚本命令，而/etc/hadoop下都是hadoop的配置文件，需要配置的文件一共有如下几个：</p>
+<ul>
+<li>hadoop-env.sh     # hadoop    环境，需要在这里添加jdk的目录</li>
+<li>core-site.xml     # hadoop    核心设置</li>
+<li>hdfs-site.xml      # hadoop    hdfs文件系统设置</li>
+<li>yarn-site.xml      # yarn      资源管理设置</li>
+<li>mapred-site.xml   # mapreduce hadoop计算系统设置</li>
+</ul>
+<p>hadoop-env.sh只需要在末尾加上jdk的环境变量即可</p>
+<p>core-site.xml配置如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span>         </span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>fs.defaultFS<span class="tag">&lt;/<span class="name">name</span>&gt;</span>         </span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>hdfs://master:9000<span class="tag">&lt;/<span class="name">value</span>&gt;</span>     </span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.tmp.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>/usr/hadoop/tmp<span class="tag">&lt;/<span class="name">value</span>&gt;</span>  ##这里的地址都是在$HADOOP_HOME目录下的</span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>hdfs-site.xml配置如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span>         <span class="tag">&lt;<span class="name">property</span>&gt;</span>              <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.replication<span class="tag">&lt;/<span class="name">name</span>&gt;</span>              <span class="tag">&lt;<span class="name">value</span>&gt;</span>1<span class="tag">&lt;/<span class="name">value</span>&gt;</span>                    ## 因为是伪分布式，所以这里写一个就好了         <span class="tag">&lt;/<span class="name">property</span>&gt;</span>         <span class="tag">&lt;<span class="name">property</span>&gt;</span>              <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.name.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span>              <span class="tag">&lt;<span class="name">value</span>&gt;</span>/usr/hadoop/data/name<span class="tag">&lt;/<span class="name">value</span>&gt;</span>         <span class="tag">&lt;/<span class="name">property</span>&gt;</span>         <span class="tag">&lt;<span class="name">property</span>&gt;</span>              <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.datanode.data.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span>              <span class="tag">&lt;<span class="name">value</span>&gt;</span>/usr/hadoop/data/data<span class="tag">&lt;/<span class="name">value</span>&gt;</span>         <span class="tag">&lt;/<span class="name">property</span>&gt;</span> <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>yarn-site.xml配置如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span> <span class="comment">&lt;!-- Site specific YARN configuration properties --&gt;</span>         <span class="tag">&lt;<span class="name">property</span>&gt;</span>                <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.aux-services<span class="tag">&lt;/<span class="name">name</span>&gt;</span>                <span class="tag">&lt;<span class="name">value</span>&gt;</span>mapreduce_shuffle<span class="tag">&lt;/<span class="name">value</span>&gt;</span>         <span class="tag">&lt;/<span class="name">property</span>&gt;</span>         <span class="tag">&lt;<span class="name">property</span>&gt;</span>         <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.hostname<span class="tag">&lt;/<span class="name">name</span>&gt;</span>         <span class="tag">&lt;<span class="name">value</span>&gt;</span>master<span class="tag">&lt;/<span class="name">value</span>&gt;</span>     <span class="tag">&lt;/<span class="name">property</span>&gt;</span> <span class="tag">&lt;<span class="name">property</span>&gt;</span>  <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span>    <span class="tag">&lt;<span class="name">value</span>&gt;</span>master:18040<span class="tag">&lt;/<span class="name">value</span>&gt;</span>  <span class="tag">&lt;/<span class="name">property</span>&gt;</span>  <span class="tag">&lt;<span class="name">property</span>&gt;</span>    <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.scheduler.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span>    <span class="tag">&lt;<span class="name">value</span>&gt;</span>master:18030<span class="tag">&lt;/<span class="name">value</span>&gt;</span>  <span class="tag">&lt;/<span class="name">property</span>&gt;</span>  <span class="tag">&lt;<span class="name">property</span>&gt;</span>    <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.webapp.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span>    <span class="tag">&lt;<span class="name">value</span>&gt;</span>master:18088<span class="tag">&lt;/<span class="name">value</span>&gt;</span>  <span class="tag">&lt;/<span class="name">property</span>&gt;</span>  <span class="tag">&lt;<span class="name">property</span>&gt;</span>    <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.resource-tracker.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span>    <span class="tag">&lt;<span class="name">value</span>&gt;</span>master:18025<span class="tag">&lt;/<span class="name">value</span>&gt;</span>  <span class="tag">&lt;/<span class="name">property</span>&gt;</span>  <span class="tag">&lt;<span class="name">property</span>&gt;</span>    <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.admin.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span>    <span class="tag">&lt;<span class="name">value</span>&gt;</span>master:18141<span class="tag">&lt;/<span class="name">value</span>&gt;</span>  <span class="tag">&lt;/<span class="name">property</span>&gt;</span>  <span class="tag">&lt;<span class="name">property</span>&gt;</span>     <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.aux-services<span class="tag">&lt;/<span class="name">name</span>&gt;</span>     <span class="tag">&lt;<span class="name">value</span>&gt;</span>mapreduce_shuffle<span class="tag">&lt;/<span class="name">value</span>&gt;</span>  <span class="tag">&lt;/<span class="name">property</span>&gt;</span>  <span class="tag">&lt;<span class="name">property</span>&gt;</span>      <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.auxservices.mapreduce.shuffle.class<span class="tag">&lt;/<span class="name">name</span>&gt;</span>      <span class="tag">&lt;<span class="name">value</span>&gt;</span>org.apache.hadoop.mapred.ShuffleHandler<span class="tag">&lt;/<span class="name">value</span>&gt;</span>  <span class="tag">&lt;/<span class="name">property</span>&gt;</span> <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>mapred-site.xml默认是没有的，但是有个template文件，把它拿过来用就好了：</p>
+<p>cp mapred-site.xml.template mapred-site.xml</p>
+<p>然后配置一下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span>       <span class="tag">&lt;<span class="name">property</span>&gt;</span>             <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.framework.name<span class="tag">&lt;/<span class="name">name</span>&gt;</span>             <span class="tag">&lt;<span class="name">value</span>&gt;</span>yarn<span class="tag">&lt;/<span class="name">value</span>&gt;</span>         <span class="tag">&lt;/<span class="name">property</span>&gt;</span>         <span class="tag">&lt;<span class="name">property</span>&gt;</span>             <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.jobhistory.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span>             <span class="tag">&lt;<span class="name">value</span>&gt;</span>master:10020<span class="tag">&lt;/<span class="name">value</span>&gt;</span>      <span class="tag">&lt;/<span class="name">property</span>&gt;</span>     <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span>  </span><br></pre></td></tr></table></figure>
+
+<p>最后需要配置一下salves文件，在slaves文件里把第一行的localhost去掉，然后添加：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">master</span><br></pre></td></tr></table></figure>
+
+<p>原本master是不应该出现在这个文件里的，但由于这是伪分布式，所以把master写进去就好了。</p>
+<p>以上配置完成后可以进入$HADOOP_HOME/下，把刚才的目录创建好：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mkdir data tmp</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> data</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> mkdir data name</span></span><br></pre></td></tr></table></figure>
+
+<p>然后进入$HADOOP_HOME/sbin/目录，执行命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hdfs namenode -format  <span class="comment"># 其实 hadoop namenode -format也行的</span></span></span><br></pre></td></tr></table></figure>
+
+<p>初始化hadoop系统，如果在靠近结束处看到输出 successfully 的单词，意思就是初始化成功了。</p>
+<p>接下来可以启动hadoop系统试试看：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sh start-all.sh</span></span><br></pre></td></tr></table></figure>
+
+<p>这个时候可能会出现要你输入yes的fingerprint，然后还可能要你输入master的密码，输入就是了。</p>
+<p>等待启动工作结束以后，输入：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> jps</span></span><br></pre></td></tr></table></figure>
+
+<p>这个时候输出的结果应该要包含：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">NameNode</span><br><span class="line"></span><br><span class="line">NodeManager</span><br><span class="line"></span><br><span class="line">DataNode</span><br><span class="line"></span><br><span class="line">jps</span><br><span class="line"></span><br><span class="line">ResourceManager</span><br><span class="line"></span><br><span class="line">SecondaryNameNode</span><br></pre></td></tr></table></figure>
+
+<p>如果都有恭喜你成功搭建好了hadoop伪分布式系统，可以登陆浏览器输入<a href="http://master:50070（此处的master替换为你的master的ip地址）">http://master:50070（此处的master替换为你的master的ip地址）</a></p>
+<p>你会看到有一个Live Nodes，那就是你的master了</p>
+<h3 id="五-Hadoop-完全分布式搭建"><a href="#五-Hadoop-完全分布式搭建" class="headerlink" title="五. Hadoop 完全分布式搭建"></a>五. Hadoop 完全分布式搭建</h3><p>根据上面伪分布式搭建的步骤，只有几个需要修改的地方：</p>
+<ol>
+<li>​    在hdfs-site.xml里将副本数量由1改为你的从机数量</li>
+<li>​    将slaves的文件删除master自身，修改为你所有的从机的名字或是ip地址</li>
+</ol>
+<h2 id="Spark环境安装"><a href="#Spark环境安装" class="headerlink" title="Spark环境安装"></a>Spark环境安装</h2><h2 id="一-解压-spark-压缩包到本地"><a href="#一-解压-spark-压缩包到本地" class="headerlink" title="一. 解压 spark 压缩包到本地"></a>一. 解压 spark 压缩包到本地</h2><p>$  tar -xvf (或者 -zxvf) spark-3.1.1.tar.gz  # 具体包名是你实际下载的包的名字<br> $  mv spark-3.1.1 spark  # 改名，可省略</p>
+<p><img src="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_643924a961bc28b5.png" alt="img"></p>
+<p><img src="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_6d77eadb8923c6b2.png" alt="img"></p>
+<h2 id="二-配置spark环境变量"><a href="#二-配置spark环境变量" class="headerlink" title="二. 配置spark环境变量"></a>二. 配置spark环境变量</h2><p>(1) 可以配置全局变量，也可选择只配置本地变量</p>
+<p> vi /etc/profile 或 vi ~/.bash_profile （千万不要遗漏 ～号）</p>
+<p>export SPARK_HOME=/root/software/spark<br> export PATH=$SPARK_HOME/bin:$PATH</p>
+<p><img src="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_7a2ecb71f66dc1d0.png" alt="img"></p>
+<p><img src="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_95a3705563b495a.png" alt="img"></p>
+<h2 id="三-配置spark-目录在-SPARK-HOME-conf-下"><a href="#三-配置spark-目录在-SPARK-HOME-conf-下" class="headerlink" title="三.配置spark (目录在$SPARK_HOME/conf 下)"></a>三.配置spark (目录在$SPARK_HOME/conf 下)</h2><p>$ cd $SPARK_HOME/conf</p>
+<p><img src="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_babee5f06a457718.png" alt="img"></p>
+<p>(1) 编辑 spark-env.sh.template，先将其复制一份，改为 spark-env.sh</p>
+<p># 1. 配置java<br> export JAVA_HOME=/root/jdk1.8.0_171<br> # 2. 配置scala<br> export SCALA_HOME=/root/scala-2.11.7<br> # 3. 配置hadoop<br> export HADOOP_HOME=/root/hadoop-2.7.7<br> # 4.hadoop配置文件路径<br> export HADOOP_CONF_DIR=/root/hadoop-2.7.7/etc/hadoop<br> # 5.spark master的主机<br> export SPARK_MASTER_IP=master # 192.168.80.111<br> export SPARK_MASTER_PORT=7077<br> # 6.设置一个工人的内存使用大小<br> export SPARK_WORKER_MEMORY=4g<br> # 7.设置一个工人所需要的核心数<br> export SPARK_WORKER_CORES=2<br> # 8.设置工人实例化的数量（每台机器的工人数）<br> export SPARK_WORKER_INSTANCES=1</p>
+<p> # 如果你同时在用hbase的话<br> export SPARK_CLASSPATH=$HBASE_HOME/lib/hbase-protocol-1.2.4.jar:$HBASE_HOME/lib/hbase-common-1.2.4.jar:$HBASE_HOME/lib/htrace-core-3.1.0-incubating.jar:$HBASE_HOME/lib/hbase-server-1.2.4.jar:$HBASE_HOME/lib/hbase-client-1.2.4.jar:$HBASE_HOME/lib/metrics-core-2.2.0.jar:$SPARK_CLASSPATH </p>
+<p><img src="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_ef79e93fe38f4360.png" alt="img"></p>
+<p><img src="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_64f3fb529e49180d.png" alt="img"></p>
+<p>（2）编辑 slaves.template, 该文件在spark3.0版本以后已经更名为workers.template, slave这个词并不友好啊…</p>
+<p>$ cp slaves.template slaves  # spark 2.x<br> $ cp workers.template workers # spark 3.x</p>
+<p> 编辑这个文件</p>
+<p># localhost 删除或注释这行<br> s1<br> s2<br> #添加所有子节点</p>
+<p><img src="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_d31bc41415bd0f64.png" alt="img"></p>
+<p>一切准备就绪后，把spark分发到你的所有节点上, 配置就完成了</p>
+<p><img src="file:///tmp/lu18110k3l303.tmp/lu18110k3l31d_tmp_38167f32f00beca3.png" alt="img"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/01/18/Hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/" data-id="ckyk33v1e00011hdmh52l39f8" data-title="Hadoop环境搭建教程" class="article-share-link">Teilen</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/01/18/Centos7%E5%AE%89%E8%A3%85weblogic14-Headless-Mode/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          Centos7安装weblogic14(Headless Mode)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/01/18/%E8%99%9A%E6%8B%9F%E6%9C%BALVM%E6%89%A9%E5%AE%B9%E6%8C%87%E5%8D%97/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">虚拟机LVM扩容指南</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/01/18/%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85vsftpd/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/18/%E5%9F%BA%E4%BA%8ECentOS7%E7%9A%84%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%81%94%E7%BD%91%E6%89%8B%E5%86%8C/">基于CentOS7的虚拟机联网手册</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/18/Centos7%E5%AE%89%E8%A3%85weblogic14-Headless-Mode/">Centos7安装weblogic14(Headless Mode)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/18/Hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B/">Hadoop环境搭建教程</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/18/%E8%99%9A%E6%8B%9F%E6%9C%BALVM%E6%89%A9%E5%AE%B9%E6%8C%87%E5%8D%97/">虚拟机LVM扩容指南</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 神樂坂优纪<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
